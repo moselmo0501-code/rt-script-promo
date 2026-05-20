@@ -235,42 +235,156 @@ html,body{
 .scene.active .feat:nth-child(2){opacity:1;transform:none;transition-delay:.67s}
 .scene.active .feat:nth-child(3){opacity:1;transform:none;transition-delay:.82s}
 
-/* ── Intro circles ── */
-.circles{
-  display:flex;align-items:center;justify-content:center;
-  width:100%;height:100%;position:relative;
+/* ── Hero Visual (carousel 3 slides) ── */
+.hero-visual{
+  width:100%;max-width:30em;margin:0 auto;
+  background:rgba(255,255,255,.04);
+  border-radius:1.5em;
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  box-shadow:0 0 60px rgba(124,58,237,.12);
+  display:flex;flex-direction:column;
 }
-.circle-wrap{
-  position:relative;
-  width:18em;height:18em;
-  display:flex;align-items:center;justify-content:center;
+.hv-titlebar{
+  display:flex;align-items:center;gap:.5em;
+  padding:.6em 1.2em;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+  flex-shrink:0;
 }
-.ring{
-  position:absolute;border-radius:50%;
+.hv-dots{display:flex;gap:.35em}
+.hv-dot{width:.55em;height:.55em;border-radius:50%}
+.hv-dot-r{background:rgba(239,68,68,.7)}
+.hv-dot-y{background:rgba(234,179,8,.7)}
+.hv-dot-g{background:rgba(34,197,94,.7)}
+.hv-title-label{
+  font-family:'DM Sans',sans-serif;font-size:.58em;
+  color:rgba(100,116,139,1);margin-left:.4em;
+}
+.hv-slides{position:relative;height:19em;flex-shrink:0}
+.hv-slide{
+  position:absolute;inset:0;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .6s ease,transform .6s ease;
+  pointer-events:none;
+}
+.hv-slide.hv-active{opacity:1;transform:translateY(0);pointer-events:auto}
+.hv-nav{
+  display:flex;align-items:center;justify-content:center;gap:.5em;
+  padding:.65em .8em;flex-shrink:0;
+}
+.hv-nav-btn{
+  display:flex;align-items:center;gap:.3em;
+  padding:.28em .75em;border-radius:9999px;
+  font-family:'DM Sans',sans-serif;font-size:.52em;
+  border:1px solid transparent;background:transparent;
+  color:rgba(100,116,139,1);cursor:pointer;
+  transition:all .3s ease;
+}
+.hv-nav-btn::before{
+  content:'';width:.35em;height:.35em;border-radius:50%;
+  background:rgba(100,116,139,.5);transition:background .3s;
+}
+.hv-nav-btn.hv-active-btn{
+  background:rgba(124,58,237,.25);color:#9D5FF3;
+  border-color:rgba(124,58,237,.4);
+}
+.hv-nav-btn.hv-active-btn::before{background:#9D5FF3}
+/* Workflow slide */
+.hv-wf{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  justify-content:center;padding:.8em 1em;gap:.35em;box-sizing:border-box;
+}
+.hv-wf-head{
+  text-align:center;margin-bottom:.4em;
+  font-family:'DM Sans',sans-serif;font-size:.5em;
+  text-transform:uppercase;letter-spacing:.18em;color:rgba(100,116,139,1);
+}
+.hv-wf-step{
+  display:flex;align-items:center;gap:.6em;
+  border-radius:.9em;padding:.45em .9em;
+  border:1px solid transparent;
+  transition:all .3s ease;
+}
+.hv-wf-step.wf-current{
+  background:rgba(124,58,237,.15);
+  border-color:rgba(124,58,237,.4);
+  box-shadow:0 0 16px rgba(124,58,237,.2);
+  transform:translateX(4px);
+}
+.hv-wf-step.wf-done{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.06)}
+.hv-wf-icon{
+  width:1.6em;height:1.6em;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9em;flex-shrink:0;
+  background:rgba(255,255,255,.05);color:rgba(100,116,139,1);
+  transition:all .3s;
+}
+.wf-current .hv-wf-icon{background:rgba(124,58,237,.3);color:#fff}
+.wf-done .hv-wf-icon{background:rgba(34,197,94,.2);color:#4ade80}
+.hv-wf-text{flex:1;min-width:0}
+.hv-wf-label{
+  font-family:'DM Sans',sans-serif;font-size:.62em;font-weight:500;
+  color:rgba(100,116,139,1);transition:color .3s;
+}
+.wf-current .hv-wf-label{color:#fff}
+.wf-done .hv-wf-label{color:rgba(148,163,184,.7)}
+.hv-wf-detail{
+  font-family:'DM Sans',sans-serif;font-size:.48em;
+  color:#9D5FF3;margin-top:.1em;
+  overflow:hidden;max-height:0;opacity:0;
+  transition:max-height .3s,opacity .3s;
+}
+.wf-current .hv-wf-detail{max-height:2em;opacity:1}
+.hv-wf-bar{width:3.5em;height:.22em;border-radius:9999px;background:rgba(255,255,255,.1);overflow:hidden;flex-shrink:0}
+.hv-wf-bar-fill{height:100%;background:#7C3AED;border-radius:9999px;width:0}
+.hv-wf-bar-done{width:3.5em;height:.22em;border-radius:9999px;background:rgba(74,222,128,.4);flex-shrink:0}
+.hv-wf-dots-row{display:flex;justify-content:center;gap:.3em;margin-top:.4em}
+.hv-wf-dot{
+  border-radius:9999px;transition:all .3s;
+  height:.3em;width:.3em;background:rgba(255,255,255,.15);
+}
+.hv-wf-dot.wf-dot-active{width:.9em;background:#7C3AED}
+.hv-wf-dot.wf-dot-done{background:rgba(74,222,128,.6)}
+/* Dashboard slide */
+.hv-dash{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  gap:.5em;padding:.7em .9em;box-sizing:border-box;
+}
+.hv-dash-header{
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.hv-dash-title{
+  font-family:'DM Sans',sans-serif;font-size:.48em;
+  text-transform:uppercase;letter-spacing:.15em;color:rgba(100,116,139,1);
+}
+.hv-dash-live{display:flex;align-items:center;gap:.3em}
+.hv-live-dot{
+  width:.35em;height:.35em;border-radius:50%;background:#4ade80;
+  animation:pulse-slow 2s ease-in-out infinite;
+}
+.hv-live-label{font-family:'DM Sans',sans-serif;font-size:.42em;color:#4ade80}
+.hv-panels{display:flex;gap:.5em;flex:1;min-height:0}
+.hv-glass-panel{
+  background:rgba(255,255,255,.04);border-radius:.75em;
   border:1px solid rgba(255,255,255,.08);
+  padding:.4em;flex:1;display:flex;flex-direction:column;min-width:0;
 }
-.ring-1{width:18em;height:18em}
-.ring-2{width:13em;height:13em;border-color:rgba(157,95,243,.22)}
-.ring-3{width:8em;height:8em;border-color:rgba(157,95,243,.38)}
-.circle-core{
-  width:5em;height:5em;border-radius:50%;
-  background:rgba(124,58,237,.22);
-  border:1px solid rgba(157,95,243,.45);
-  display:flex;align-items:center;justify-content:center;
-  color:#9D5FF3;
-  box-shadow:0 0 24px rgba(124,58,237,.3);
+.hv-panel-lbl{
+  font-family:'DM Sans',sans-serif;font-size:.42em;
+  color:rgba(100,116,139,1);margin-bottom:.2em;padding:0 .2em;
+  flex-shrink:0;
 }
-.circle-core svg{width:2.4em;height:2.4em}
-.orbit-dot{
-  position:absolute;
-  width:.55em;height:.55em;border-radius:50%;
-  background:#9D5FF3;
-  box-shadow:0 0 8px rgba(124,58,237,.6);
-  top:50%;left:50%;
-  transform-origin:0 0;
-  animation:orbit 8s linear infinite;
-  margin-top:-.28em;margin-left:6.2em;
+.hv-panel-lbl+svg{flex:1;width:100%}
+.hv-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.4em;flex-shrink:0}
+.hv-metric{
+  background:rgba(255,255,255,.04);border-radius:.55em;
+  border:1px solid rgba(255,255,255,.06);
+  padding:.35em .65em;display:flex;align-items:center;justify-content:space-between;
 }
+.hv-metric-lbl{font-family:'DM Sans',sans-serif;font-size:.45em;color:rgba(100,116,139,1)}
+.hv-metric-val{font-family:'DM Sans',sans-serif;font-size:.52em;font-weight:600;color:#fff}
+.hv-metric-ok{font-size:.42em;color:#4ade80;margin-left:.2em}
 
 /* ── Global Vision product grid ── */
 .mini-grid{
@@ -392,10 +506,6 @@ html,body{
 @keyframes blink{
   0%,100%{opacity:1} 50%{opacity:.4}
 }
-@keyframes orbit{
-  from{transform:rotate(0deg) translateX(6.2em) rotate(0deg)}
-  to  {transform:rotate(360deg) translateX(6.2em) rotate(-360deg)}
-}
 </style>
 </head>
 <body>
@@ -429,13 +539,127 @@ html,body{
       <p class="body-text">Des outils conçus pour fiabiliser et accélérer les workflows de radiothérapie.</p>
     </div>
     <div class="slide-visual">
-      <div class="circles">
-        <div class="circle-wrap">
-          <span class="ring ring-1"></span>
-          <span class="ring ring-2"></span>
-          <span class="ring ring-3"></span>
-          <div class="circle-core"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <span class="orbit-dot"></span>
+      <div class="hero-visual" id="hero-visual">
+        <!-- Title bar -->
+        <div class="hv-titlebar">
+          <div class="hv-dots">
+            <span class="hv-dot hv-dot-r"></span>
+            <span class="hv-dot hv-dot-y"></span>
+            <span class="hv-dot hv-dot-g"></span>
+          </div>
+          <span class="hv-title-label" id="hv-label">RT-Script — Radiotherapy</span>
+        </div>
+        <!-- Slides -->
+        <div class="hv-slides">
+          <!-- Slide 1: LINAC -->
+          <div class="hv-slide hv-active" id="hv-slide-0">
+            <svg id="linac-svg" viewBox="0 0 400 400" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="200" cy="200" r="60" fill="rgba(6,182,212,0.06)"/>
+              <ellipse cx="200" cy="200" rx="130" ry="97" stroke="#7C3AED" stroke-width="1.5" stroke-opacity="0.10" fill="none"/>
+              <ellipse cx="200" cy="200" rx="100" ry="75" stroke="#7C3AED" stroke-width="1.5" stroke-opacity="0.16" fill="none"/>
+              <ellipse cx="200" cy="200" rx="75" ry="56" stroke="#9D5FF3" stroke-width="1.5" stroke-opacity="0.22" fill="none"/>
+              <ellipse cx="200" cy="200" rx="52" ry="39" stroke="#06B6D4" stroke-width="1.5" stroke-opacity="0.30" fill="none"/>
+              <ellipse cx="200" cy="200" rx="33" ry="24" stroke="#06B6D4" stroke-width="1.5" stroke-opacity="0.45" fill="none" style="filter:drop-shadow(0 0 4px #06B6D4)"/>
+              <ellipse cx="200" cy="200" rx="18" ry="13" stroke="#22D3EE" stroke-width="1.5" stroke-opacity="0.65" fill="none" style="filter:drop-shadow(0 0 4px #22D3EE)"/>
+              <circle cx="200" cy="200" r="5" fill="#22D3EE" style="filter:drop-shadow(0 0 6px #22D3EE)"/>
+              <circle cx="200" cy="200" r="12" fill="none" stroke="#22D3EE" stroke-width="1" stroke-opacity="0.4"/>
+              <circle cx="200" cy="200" r="150" stroke="rgba(124,58,237,0.15)" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+              <line id="l-beam1" x1="200" y1="60" x2="200" y2="200" stroke="rgba(6,182,212,0.5)" stroke-width="3" style="filter:drop-shadow(0 0 4px rgba(6,182,212,0.8))"/>
+              <line id="l-beam2" x1="340" y1="200" x2="200" y2="200" stroke="rgba(124,58,237,0.4)" stroke-width="2" style="filter:drop-shadow(0 0 3px rgba(124,58,237,0.6))"/>
+              <line id="l-beam3" x1="200" y1="340" x2="200" y2="200" stroke="rgba(6,182,212,0.3)" stroke-width="2"/>
+              <g id="l-head1"><rect x="170" y="44" width="60" height="28" rx="6" fill="#1A2340" stroke="#7C3AED" stroke-width="1.5" style="filter:drop-shadow(0 0 8px rgba(124,58,237,0.6))"/><rect x="183" y="68" width="34" height="10" rx="3" fill="#7C3AED" fill-opacity="0.6"/></g>
+              <g id="l-head2"><rect x="175" y="50" width="50" height="20" rx="4" fill="#1A2340" stroke="#9D5FF3" stroke-width="1" stroke-opacity="0.6"/></g>
+              <g id="l-head3"><rect x="175" y="50" width="50" height="20" rx="4" fill="#1A2340" stroke="#06B6D4" stroke-width="1" stroke-opacity="0.5"/></g>
+              <text x="200" y="375" fill="#64748B" font-size="11" font-family="DM Sans,sans-serif" text-anchor="middle">VMAT — Volumetric Arc Therapy</text>
+              <line x1="24" y1="20" x2="38" y2="20" stroke="#9D5FF3" stroke-width="1.5"/><text x="42" y="24" fill="#94A3B8" font-size="8" font-family="DM Sans,sans-serif">95%</text>
+              <line x1="24" y1="36" x2="38" y2="36" stroke="#06B6D4" stroke-width="1.5"/><text x="42" y="40" fill="#94A3B8" font-size="8" font-family="DM Sans,sans-serif">80%</text>
+              <line x1="24" y1="52" x2="38" y2="52" stroke="#22D3EE" stroke-width="1.5"/><text x="42" y="56" fill="#94A3B8" font-size="8" font-family="DM Sans,sans-serif">50%</text>
+            </svg>
+          </div>
+          <!-- Slide 2: Workflow -->
+          <div class="hv-slide" id="hv-slide-1">
+            <div class="hv-wf">
+              <div class="hv-wf-head">Automated Workflow</div>
+              <div id="wf-step-0" class="hv-wf-step"><div class="hv-wf-icon">🔍</div><div class="hv-wf-text"><div class="hv-wf-label">Auto Verification</div><div class="hv-wf-detail">SmartCheck — parameters</div></div><div class="hv-wf-bar"><div class="hv-wf-bar-fill" id="wf-bar-0"></div></div></div>
+              <div id="wf-step-1" class="hv-wf-step"><div class="hv-wf-icon">⚡</div><div class="hv-wf-text"><div class="hv-wf-label">Plan Optimization</div><div class="hv-wf-detail">Fast Planning — AI-driven</div></div><div class="hv-wf-bar"><div class="hv-wf-bar-fill" id="wf-bar-1"></div></div></div>
+              <div id="wf-step-2" class="hv-wf-step"><div class="hv-wf-icon">📊</div><div class="hv-wf-text"><div class="hv-wf-label">Dose Prediction</div><div class="hv-wf-detail">Plan Horizon — DVH estimate</div></div><div class="hv-wf-bar"><div class="hv-wf-bar-fill" id="wf-bar-2"></div></div></div>
+              <div id="wf-step-3" class="hv-wf-step"><div class="hv-wf-icon">✅</div><div class="hv-wf-text"><div class="hv-wf-label">DoubleCheck</div><div class="hv-wf-detail">Independent calculation</div></div><div class="hv-wf-bar"><div class="hv-wf-bar-fill" id="wf-bar-3"></div></div></div>
+              <div id="wf-step-4" class="hv-wf-step"><div class="hv-wf-icon">📄</div><div class="hv-wf-text"><div class="hv-wf-label">Report &amp; Approve</div><div class="hv-wf-detail">PDF export — ready</div></div><div class="hv-wf-bar"><div class="hv-wf-bar-fill" id="wf-bar-4"></div></div></div>
+              <div class="hv-wf-dots-row">
+                <div class="hv-wf-dot wf-dot-active" id="wf-dot-0"></div>
+                <div class="hv-wf-dot" id="wf-dot-1"></div>
+                <div class="hv-wf-dot" id="wf-dot-2"></div>
+                <div class="hv-wf-dot" id="wf-dot-3"></div>
+                <div class="hv-wf-dot" id="wf-dot-4"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 3: Dashboard -->
+          <div class="hv-slide" id="hv-slide-2">
+            <div class="hv-dash">
+              <div class="hv-dash-header">
+                <span class="hv-dash-title">Planning Dashboard — Prostate</span>
+                <div class="hv-dash-live"><div class="hv-live-dot"></div><span class="hv-live-label">Live</span></div>
+              </div>
+              <div class="hv-panels">
+                <div class="hv-glass-panel">
+                  <div class="hv-panel-lbl">Dose Distribution — Axial</div>
+                  <svg id="dose-svg" viewBox="0 0 180 162" fill="none">
+                    <ellipse cx="90" cy="80" rx="82" ry="72" fill="rgba(20,20,50,0.9)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    <ellipse id="iso-1" cx="90" cy="86" rx="52" ry="43" fill="rgba(6,182,212,0.10)" stroke="#06B6D4" stroke-width="0.7" stroke-opacity="0.45"/>
+                    <ellipse id="iso-2" cx="90" cy="86" rx="40" ry="33" fill="rgba(34,211,238,0.12)" stroke="#22D3EE" stroke-width="0.8" stroke-opacity="0.55"/>
+                    <ellipse id="iso-3" cx="90" cy="86" rx="28" ry="23" fill="rgba(124,58,237,0.18)" stroke="#9D5FF3" stroke-width="0.9" stroke-opacity="0.65"/>
+                    <ellipse id="iso-4" cx="90" cy="86" rx="19" ry="15" fill="rgba(168,85,247,0.22)" stroke="#A855F7" stroke-width="1" stroke-opacity="0.80"/>
+                    <ellipse id="iso-5" cx="90" cy="86" rx="11" ry="9" fill="rgba(239,68,68,0.28)" stroke="#EF4444" stroke-width="1.2" stroke-opacity="0.90" style="filter:drop-shadow(0 0 5px rgba(239,68,68,0.55))"/>
+                    <ellipse cx="90" cy="42" rx="23" ry="15" fill="rgba(6,182,212,0.10)" stroke="#06B6D4" stroke-width="0.8" stroke-dasharray="2 2" stroke-opacity="0.55"/>
+                    <text x="90" y="45" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif" text-anchor="middle">Bladder</text>
+                    <ellipse cx="90" cy="124" rx="15" ry="10" fill="rgba(249,115,22,0.10)" stroke="#F97316" stroke-width="0.8" stroke-dasharray="2 2" stroke-opacity="0.55"/>
+                    <text x="90" y="127" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif" text-anchor="middle">Rectum</text>
+                    <circle cx="27" cy="86" r="14" fill="rgba(100,116,139,0.12)" stroke="rgba(148,163,184,0.25)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                    <text x="27" y="89" fill="#475569" font-size="5" font-family="DM Sans,sans-serif" text-anchor="middle">LFH</text>
+                    <circle cx="153" cy="86" r="14" fill="rgba(100,116,139,0.12)" stroke="rgba(148,163,184,0.25)" stroke-width="0.8" stroke-dasharray="2 2"/>
+                    <text x="153" y="89" fill="#475569" font-size="5" font-family="DM Sans,sans-serif" text-anchor="middle">RFH</text>
+                    <text x="90" y="88" fill="rgba(255,255,255,0.85)" font-size="6.5" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="bold">PTV</text>
+                    <rect x="2" y="153" width="8" height="4" fill="#EF4444" opacity="0.75" rx="1"/><text x="12" y="158" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif">100%</text>
+                    <rect x="46" y="153" width="8" height="4" fill="#A855F7" opacity="0.75" rx="1"/><text x="56" y="158" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif">95%</text>
+                    <rect x="90" y="153" width="8" height="4" fill="#9D5FF3" opacity="0.75" rx="1"/><text x="100" y="158" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif">80%</text>
+                    <rect x="134" y="153" width="8" height="4" fill="#06B6D4" opacity="0.75" rx="1"/><text x="144" y="158" fill="#64748B" font-size="6" font-family="DM Sans,sans-serif">50%</text>
+                  </svg>
+                </div>
+                <div class="hv-glass-panel">
+                  <div class="hv-panel-lbl">DVH</div>
+                  <svg id="dvh-svg" viewBox="0 0 180 162" fill="none">
+                    <line x1="15" y1="57"  x2="170" y2="57"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="15" y1="99"  x2="170" y2="99"  stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="15" y1="141" x2="170" y2="141" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="53"  y1="15" x2="53"  y2="153" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="91"  y1="15" x2="91"  y2="153" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="129" y1="15" x2="129" y2="153" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <line x1="15" y1="153" x2="170" y2="153" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+                    <line x1="15" y1="15"  x2="15"  y2="153" stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+                    <path id="dvh-ptv"     stroke="#9D5FF3" stroke-width="2"   fill="none" style="filter:drop-shadow(0 0 3px rgba(124,58,237,0.6))"/>
+                    <path id="dvh-rectum"  stroke="#F97316" stroke-width="1.5" fill="none" stroke-opacity="0.75"/>
+                    <path id="dvh-bladder" stroke="#22D3EE" stroke-width="1.5" fill="none" stroke-opacity="0.75"/>
+                    <line x1="82"  y1="25" x2="94"  y2="25" stroke="#9D5FF3" stroke-width="2"/><text x="97"  y="29" fill="#94A3B8" font-size="7" font-family="DM Sans,sans-serif">PTV</text>
+                    <line x1="112" y1="25" x2="124" y2="25" stroke="#F97316" stroke-width="2"/><text x="127" y="29" fill="#94A3B8" font-size="7" font-family="DM Sans,sans-serif">Rect.</text>
+                    <line x1="142" y1="25" x2="154" y2="25" stroke="#22D3EE" stroke-width="2"/><text x="157" y="29" fill="#94A3B8" font-size="7" font-family="DM Sans,sans-serif">Blad.</text>
+                  </svg>
+                </div>
+              </div>
+              <div class="hv-metrics">
+                <div class="hv-metric"><span class="hv-metric-lbl">D95(PTV)</span><div><span class="hv-metric-val">76.0 Gy</span><span class="hv-metric-ok">✓</span></div></div>
+                <div class="hv-metric"><span class="hv-metric-lbl">V65(Rectum)</span><div><span class="hv-metric-val">14.2%</span><span class="hv-metric-ok">✓</span></div></div>
+                <div class="hv-metric"><span class="hv-metric-lbl">V65(Bladder)</span><div><span class="hv-metric-val">11.8%</span><span class="hv-metric-ok">✓</span></div></div>
+                <div class="hv-metric"><span class="hv-metric-lbl">Gamma (3/3)</span><div><span class="hv-metric-val">98.7%</span><span class="hv-metric-ok">✓</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Nav dots -->
+        <div class="hv-nav" id="hv-nav">
+          <button class="hv-nav-btn hv-active-btn" data-idx="0">Radiotherapy</button>
+          <button class="hv-nav-btn" data-idx="1">Automation</button>
+          <button class="hv-nav-btn" data-idx="2">Planning System</button>
         </div>
       </div>
     </div>
@@ -705,6 +929,137 @@ html,body{
 
   setInterval(tick, TICK);
   tick();
+
+  // ── Hero Visual animations ──────────────────────────────────────────────
+  (function() {
+    var HV_SLIDES_META = [
+      { label: 'RT-Script — Radiotherapy'   },
+      { label: 'RT-Script — Automation'     },
+      { label: 'RT-Script — Planning System'},
+    ];
+    var hvCurrent = 0;
+
+    function switchHv(idx) {
+      document.querySelectorAll('.hv-slide').forEach(function(el) { el.classList.remove('hv-active'); });
+      document.querySelectorAll('.hv-nav-btn').forEach(function(el) { el.classList.remove('hv-active-btn'); });
+      var s = document.getElementById('hv-slide-' + idx);
+      if (s) s.classList.add('hv-active');
+      var btns = document.querySelectorAll('.hv-nav-btn');
+      if (btns[idx]) btns[idx].classList.add('hv-active-btn');
+      var lbl = document.getElementById('hv-label');
+      if (lbl) lbl.textContent = HV_SLIDES_META[idx].label;
+    }
+
+    // Nav buttons
+    document.querySelectorAll('.hv-nav-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        switchHv(parseInt(btn.getAttribute('data-idx')));
+        hvCurrent = parseInt(btn.getAttribute('data-idx'));
+      });
+    });
+
+    // Auto-switch carousel every 10s
+    setInterval(function() {
+      hvCurrent = (hvCurrent + 1) % 3;
+      switchHv(hvCurrent);
+    }, 10000);
+
+    // ── Slide 1: LINAC rotating gantry ──────────────────────────────────
+    var linacAngle = 0;
+    var b1 = document.getElementById('l-beam1');
+    var b2 = document.getElementById('l-beam2');
+    var b3 = document.getElementById('l-beam3');
+    var h1 = document.getElementById('l-head1');
+    var h2 = document.getElementById('l-head2');
+    var h3 = document.getElementById('l-head3');
+
+    setInterval(function() {
+      linacAngle = (linacAngle + 0.6) % 360;
+      var r  = linacAngle * Math.PI / 180;
+      var r2 = (linacAngle + 90)  * Math.PI / 180;
+      var r3 = (linacAngle + 180) * Math.PI / 180;
+      var cx = 200, cy = 200;
+      var hx1 = cx + Math.cos(r)  * 140, hy1 = cy + Math.sin(r)  * 140;
+      var hx2 = cx + Math.cos(r2) * 140, hy2 = cy + Math.sin(r2) * 140;
+      var hx3 = cx + Math.cos(r3) * 140, hy3 = cy + Math.sin(r3) * 140;
+      if (b1) { b1.setAttribute('x1', hx1); b1.setAttribute('y1', hy1); }
+      if (b2) { b2.setAttribute('x1', hx2); b2.setAttribute('y1', hy2); }
+      if (b3) { b3.setAttribute('x1', hx3); b3.setAttribute('y1', hy3); }
+      if (h1) h1.setAttribute('transform', 'rotate(' + linacAngle + ',200,200)');
+      if (h2) h2.setAttribute('transform', 'rotate(' + (linacAngle + 90) + ',200,200)');
+      if (h3) h3.setAttribute('transform', 'rotate(' + (linacAngle + 180) + ',200,200)');
+    }, 30);
+
+    // ── Slide 2: Workflow steps ──────────────────────────────────────────
+    var WF_STEPS = 5;
+    var wfActive = 0;
+    var wfBarAnims = [null, null, null, null, null];
+
+    function setWfStep(active) {
+      for (var i = 0; i < WF_STEPS; i++) {
+        var stepEl = document.getElementById('wf-step-' + i);
+        var barEl  = document.getElementById('wf-bar-' + i);
+        var dotEl  = document.getElementById('wf-dot-' + i);
+        if (!stepEl) continue;
+        stepEl.classList.remove('wf-current', 'wf-done');
+        if (dotEl) { dotEl.classList.remove('wf-dot-active', 'wf-dot-done'); }
+        // Replace bar with plain bar for done/idle
+        var parent = barEl ? barEl.parentNode : null;
+        if (i < active) {
+          stepEl.classList.add('wf-done');
+          var iconEl = stepEl.querySelector('.hv-wf-icon');
+          if (iconEl) iconEl.textContent = '✓';
+          if (barEl) barEl.style.width = '100%';
+          if (parent) { parent.className = 'hv-wf-bar-done'; }
+          if (dotEl) dotEl.classList.add('wf-dot-done');
+        } else if (i === active) {
+          stepEl.classList.add('wf-current');
+          if (barEl) { barEl.style.transition = 'none'; barEl.style.width = '0%'; }
+          if (parent) { parent.className = 'hv-wf-bar'; }
+          // Animate bar fill over ~850ms
+          setTimeout(function(b){ if (b) { b.style.transition = 'width 0.85s linear'; b.style.width = '100%'; } }, 20, barEl);
+          if (dotEl) dotEl.classList.add('wf-dot-active');
+        } else {
+          var iconEl2 = stepEl.querySelector('.hv-wf-icon');
+          var ICONS = ['🔍','⚡','📊','✅','📄'];
+          if (iconEl2) iconEl2.textContent = ICONS[i];
+          if (barEl) barEl.style.width = '0%';
+          if (parent) { parent.className = 'hv-wf-bar'; }
+        }
+      }
+    }
+
+    setWfStep(0);
+    setInterval(function() {
+      wfActive = (wfActive + 1) % WF_STEPS;
+      setWfStep(wfActive);
+    }, 900);
+
+    // ── Slide 3: Dashboard wave animation ───────────────────────────────
+    var dashTick = 0;
+    var iso1 = document.getElementById('iso-1');
+    var iso2 = document.getElementById('iso-2');
+    var iso3 = document.getElementById('iso-3');
+    var iso4 = document.getElementById('iso-4');
+    var iso5 = document.getElementById('iso-5');
+    var dvhPtv     = document.getElementById('dvh-ptv');
+    var dvhRectum  = document.getElementById('dvh-rectum');
+    var dvhBladder = document.getElementById('dvh-bladder');
+
+    setInterval(function() {
+      dashTick++;
+      var wave = Math.sin(dashTick * 0.05) * 3;
+      var dw   = Math.sin(dashTick * 0.03) * 2;
+      if (iso1) { iso1.setAttribute('rx', 52 + dw);       iso1.setAttribute('ry', 43 + dw * 0.7); }
+      if (iso2) { iso2.setAttribute('rx', 40 + dw * 0.8); iso2.setAttribute('ry', 33 + dw * 0.6); }
+      if (iso3) { iso3.setAttribute('rx', 28 + dw * 0.5); iso3.setAttribute('ry', 23 + dw * 0.4); }
+      if (iso4) { iso4.setAttribute('rx', 19 + dw * 0.3); iso4.setAttribute('ry', 15 + dw * 0.2); }
+      if (iso5) { iso5.setAttribute('rx', 11 + dw * 0.1); iso5.setAttribute('ry', 9  + dw * 0.08); }
+      if (dvhPtv)     dvhPtv.setAttribute('d',     'M15,15 C50,15 65,' + (20+wave)       + ' 85,' + (55+wave)       + ' C100,' + (80+wave)       + ' 115,115 135,140 C150,152 162,154 170,154');
+      if (dvhRectum)  dvhRectum.setAttribute('d',  'M15,15 C40,18 58,' + (38+wave*0.5)   + ' 78,' + (72+wave*0.5)   + ' C98,108 118,138 142,150 C157,154 166,155 170,155');
+      if (dvhBladder) dvhBladder.setAttribute('d', 'M15,15 C38,18 55,' + (45+wave*0.3)   + ' 75,' + (82+wave*0.3)   + ' C95,118 115,143 140,151 C155,155 165,156 170,156');
+    }, 50);
+  })();
 
   // ── Fullscreen ──────────────────────────────────────────────────────────
   const MAXIMIZE_SVG = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"15 3 21 3 21 9\"/><polyline points=\"9 21 3 21 3 15\"/><line x1=\"21\" y1=\"3\" x2=\"14\" y2=\"10\"/><line x1=\"3\" y1=\"21\" x2=\"10\" y2=\"14\"/></svg>";
